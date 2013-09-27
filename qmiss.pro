@@ -15,3 +15,6 @@ SOURCES += \
 
 include(qtquick2applicationviewer.pri)
 qtcAddDeployment()
+
+OTHER_FILES += \
+    db/seed.py
