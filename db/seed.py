@@ -14,7 +14,7 @@ name_col = headers.index("Name")
 desc_col = headers.index("Description")
 
 con = None
-command = None
+command = "INSERT INTO Notes (title, description) VALUES (:name, :description);"
 
 try:
     con = sqlite3.connect('qmiss.db')
@@ -22,25 +22,15 @@ try:
     cur = con.cursor()
 
     for line in reader :
-#due to sql for some reason in this wall of text not dealing
-#with quotes i am striping them all out at this point
-#the fixes i have tried are: escaping and various diffrent
-#wraping with quotes
-        title = re.sub("[\']","",line[name_col])
-        title = re.sub("[\"]","",title)
+        params = {
+            "name" :        line[name_col],
+            "description" : line[desc_col]
+        }
+        cur.execute(command, params)
 
-        description = re.sub("[\']","",line[desc_col])
-        description = re.sub("[\"]","",description)
-
-        command = "INSERT INTO NOTES (title,description) values (\""\
-        + title + "\",\"" + description + "\");"
-        cur.execute(command);
-
-#        print("name: " + title)
-#        print("desc: " + description)
-
-except Exception:
-    print command
+except Exception as e:
+    print(e)
+    print(command)
 
 finally:
     if con:
