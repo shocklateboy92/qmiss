@@ -18,29 +18,18 @@ command = None
 
 try:
     con = sqlite3.connect('qmiss.db')
-
+    con.text_factory = str
     cur = con.cursor()
 
     for line in reader :
-#due to sql for some reason in this wall of text not dealing
-#with quotes i am striping them all out at this point
-#the fixes i have tried are: escaping and various diffrent
-#wraping with quotes
-        title = re.sub("[\']","",line[name_col])
-        title = re.sub("[\"]","",title)
+        title = line[name_col]
+        description = line[desc_col]
 
-        description = re.sub("[\']","",line[desc_col])
-        description = re.sub("[\"]","",description)
-
-        command = "INSERT INTO NOTES (title,description) values (\""\
-        + title + "\",\"" + description + "\");"
-        cur.execute(command);
+        sql = "INSERT INTO NOTES (title,description) values (?,?)"
+        cur.execute(sql ,(title, description));
 
 #        print("name: " + title)
 #        print("desc: " + description)
-
-except Exception:
-    print command
 
 finally:
     if con:
