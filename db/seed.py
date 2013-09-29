@@ -19,6 +19,8 @@ command = "INSERT INTO Notes (title, description) VALUES (:name, :description);"
 try:
     con = sqlite3.connect('qmiss.db')
 
+    con.text_factory = str
+
     cur = con.cursor()
 
     for line in reader :
