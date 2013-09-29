@@ -13,14 +13,9 @@ headers = next(reader)
 name_col = headers.index("Name")
 desc_col = headers.index("Description")
 
-con = None
 command = "INSERT INTO Notes (title, description) VALUES (:name, :description);"
 
-try:
-    con = sqlite3.connect('qmiss.db')
-
-    con.text_factory = str
-
+with sqlite3.connect('qmiss.db') as con :
     cur = con.cursor()
 
     for line in reader :
@@ -30,11 +25,4 @@ try:
         }
         cur.execute(command, params)
 
-except Exception as e:
-    print(e)
-    print(command)
-
-finally:
-    if con:
-        con.commit()
-        con.close();
+    con.commit()
