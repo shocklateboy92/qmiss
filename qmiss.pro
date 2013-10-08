@@ -4,14 +4,18 @@ DEPLOYMENTFOLDERS = ui_dir
 
 CONFIG += c++11
 
-QT += quick
+QT += quick sql
 
 HEADERS += \
-    main-window.h
+    mock-model.h \
+    main-window.h \
+    notes-model.h
 
 SOURCES += \
     main-window.cpp \
-    main.cpp
+    mock-model.cpp \
+    main.cpp \
+    notes-model.cpp
 
 include(qtquick2applicationviewer.pri)
 qtcAddDeployment()
