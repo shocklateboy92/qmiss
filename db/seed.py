@@ -18,6 +18,7 @@ attributes_command = """INSERT INTO Attributes (note_id, key, value)
                             VALUES (:note_id, :key, :value);"""
 
 with sqlite3.connect('qmiss.db') as con :
+    con.text_factory = str
     cur = con.cursor()
 
     cur.execute("PRAGMA foreign_keys = ON;");
