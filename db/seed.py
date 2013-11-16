@@ -10,8 +10,9 @@ fh = open(sys.argv[1])
 reader = csv.reader(fh)
 
 headers = next(reader)
-name_col = headers.index("Name")
-desc_col = headers.index("Description")
+headers_lowercase = [h.lower() for h in headers]
+name_col = headers_lowercase.index("name")
+desc_col = headers_lowercase.index("description")
 
 command = "INSERT INTO Notes (title, description) VALUES (:name, :description);"
 attributes_command = """INSERT INTO Attributes (note_id, key, value)
